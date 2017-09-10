@@ -6,7 +6,6 @@
  */
 package com.cinchapi.concourse.thrift;
 
-
 /**
  * Enumerates the possible TObject types
  */
