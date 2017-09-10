@@ -41,6 +41,7 @@ import org.slf4j.LoggerFactory;
 
 import com.cinchapi.concourse.Link;
 import com.cinchapi.concourse.Tag;
+import com.cinchapi.concourse.Timestamp;
 import com.cinchapi.concourse.server.GlobalState;
 import com.cinchapi.concourse.server.model.TObjectSorter;
 import com.cinchapi.concourse.server.model.Value;
@@ -1682,6 +1683,14 @@ public abstract class StoreTest extends ConcourseBaseTest {
         Assert.assertTrue(
                 store.find("friend", Operator.LINKS_TO, Convert.javaToThrift(1))
                         .isEmpty());
+    }
+    
+    @Test
+    public void testStoreTimestamp() {
+        Timestamp now = Timestamp.now();
+        add("time", Convert.javaToThrift(now), 1);
+        Assert.assertEquals(now, store.select("time", 1).iterator().next().getJavaFormat());
+        
     }
 
     /**
