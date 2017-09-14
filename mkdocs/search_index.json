@@ -1,0 +1,629 @@
+{
+    "docs": [
+        {
+            "location": "/",
+            "text": "The Concourse Guide\n#\n\n\nWelcome to the Concourse Guide!\n\n\nConcourse is an \nopen source\n, self-tuning database for both ACID transactions and ad hoc analytics across time. This Guide covers key concepts in Concourse, explains the \nAPI\n through examples and provides advice for operations and administration.\n\n\nFor new features in Concourse 0.5, see \nRelease Notes for Concourse 0.5\n.\n\n\nGetting Started\n#\n\n\nCommunity\n#\n\n\nGetting help\n#\n\n\nLicensing\n#\n\n\nConcourse is released under the Apache License, Version 2.0. For more information see the \nLICENSE\n and \nNOTICE\n files included in the Concourse repository.\n\n\nAdditional Resources\n#",
+            "title": "Home"
+        },
+        {
+            "location": "/#the-concourse-guide",
+            "text": "Welcome to the Concourse Guide!  Concourse is an  open source , self-tuning database for both ACID transactions and ad hoc analytics across time. This Guide covers key concepts in Concourse, explains the  API  through examples and provides advice for operations and administration.  For new features in Concourse 0.5, see  Release Notes for Concourse 0.5 .",
+            "title": "The Concourse Guide"
+        },
+        {
+            "location": "/#getting-started",
+            "text": "",
+            "title": "Getting Started"
+        },
+        {
+            "location": "/#community",
+            "text": "",
+            "title": "Community"
+        },
+        {
+            "location": "/#getting-help",
+            "text": "",
+            "title": "Getting help"
+        },
+        {
+            "location": "/#licensing",
+            "text": "Concourse is released under the Apache License, Version 2.0. For more information see the  LICENSE  and  NOTICE  files included in the Concourse repository.",
+            "title": "Licensing"
+        },
+        {
+            "location": "/#additional-resources",
+            "text": "",
+            "title": "Additional Resources"
+        },
+        {
+            "location": "/introduction/",
+            "text": "Introduction to Concourse\n#\n\n\nConcourse is an \nopen source\n self-tuning database warehouse that provides \nstrong consistency\n, \ndecentralized coordination\n and \noptimistic availability\n. Concourse takes the best ideas from SQL and NoSQL databases to provide an intuitive and scalable platform for both transaction and analytic workflows.\n\n\nDocument-Graph Database\n#\n\n\nConcourse is a document-graph database.\n\n\nA \nrecord\n in Concourse is a \nschemaless\n document, composed of a \nunique id\n and one or more fields. Each field is labeled with a \nkey\n and may contain one or more distinct \nprimitive values\n. Additionally, fields may contain \nlinks\n to other records, which facilitates modeling a rich graph of descriptive relationships.\n\n\nConcourse records are similar to linked \nJSON\n objects:\n\n\nThe \ndocument-graph\n data model is ideal for development:\n\n\n\n\nIntuitively mirrors the way that developers think about data.\n\n\nMakes few assumptions and adapts to application changes without translation (goodbye \nobject-relational impedance mismatch\n).\n\n\nModels complex relationships with referential integrity while avoiding hacks.\n\n\n\n\nAutomatic Indexing\n#\n\n\nConcourse \nautomatically indexes\n data for search and analytics while guaranteeing \nconstant time writes\n that are incredibly fast. This eliminates the need to plan queries in advance because Concourse fully supports ad-hoc, range, and predicate queries and caches frequently requested data for optimal performance.\n\n\nVersion Control\n#\n\n\nConcourse \nautomatically tracks changes\n to data\u2013like Git does for source code\u2013giving the power to \nquery data from the past\n, \naudit\n changes on the fly and \nrevert\n to previous states without downtime. Version control in Concourse makes it easy to build applications that leverage definitive data across time.\n\n\nACID Transactions\n#\n\n\nConcourse uses a \nnovel protocol\n to provide serializable distributed \ntransactions\n. Internally, dynamic resource management and \njust-in-time locking\n ensure that transactions have both the highest performance and strongest consistency possible. So there is no need to guess when your data will eventually become consistent. When Concourse responds to a query, you can \ntrust the results immediately\n.\n\n\nBy default, each change is \nautocommited\n and written to the database immediately. However, you can explicitly start a \ntransaction\n to control when a group of changes are \natomically\n \ncommitted\n or \naborted\n using the \nstage\n functionality.\n\n\n\n\nStart a transaction within \nconcourse shell\n:\n\n\n\n\n[\ndefault/cash\n]\n$ stage\n\n\n\n\n\n\n\nUse a \ntransaction\n to atomically transfer $50 from one account to another in \nJava\n:\n\n\n\n\nconcourse\n.\nstage\n();\n\n\ntry\n \n{\n\n  \nint\n \nbalance1\n \n=\n \nconcourse\n.\nget\n(\n\"balance\"\n,\n \n1\n);\n\n  \nint\n \nbalance2\n \n=\n \nconcourse\n.\nget\n(\n\"balance\"\n,\n \n2\n);\n\n  \nconcourse\n.\nset\n(\n\"balance\"\n,\n \nbalance1\n \n+\n \n50\n,\n \n1\n);\n\n  \nconcourse\n.\nset\n(\n\"balance\"\n,\n \nbalance2\n \n-\n \n50\n,\n \n2\n);\n\n  \nconcourse\n.\ncommit\n();\n\n\n}\n\n\ncatch\n \n(\nTransactionException\n \ne\n)\n \n{\n\n  \nconcourse\n.\nabort\n();\n\n\n}\n\n\n\n\n\n\n\n\nThe same example above using Java \nlambdas\n:\n\n\n\n\nconcourse\n.\nstage\n(()\n \n->\n \n{\n\n  \nint\n \nbalance1\n \n=\n \nconcourse\n.\nget\n(\n\"balance\"\n,\n \n1\n);\n\n  \nint\n \nbalance2\n \n=\n \nconcourse\n.\nget\n(\n\"balance\"\n,\n \n2\n);\n\n  \nconcourse\n.\nset\n(\n\"balance\"\n,\n \nbalance1\n \n+\n \n50\n,\n \n1\n);\n\n  \nconcourse\n.\nset\n(\n\"balance\"\n,\n \nbalance2\n \n-\n \n50\n,\n \n2\n);\n\n\n});\n\n\n\n\n\n\nEnvironments\n#\n\n\nConcourse separates records into \nenvironments\n, which are similar to \ndatabases\n, \nkeyspaces\n, or \nschemas\n in a other database systems. Beyond that, Concourse \ndoesn\u2019t\n impose any other organization such as tables or collections.\n\n\nYou can specify the desired environment when connecting to Concourse. If no environment is specified, the \ndefault_environment\n defined in the \nconcourse.prefs\n configuration file is used.\n\n\n\n\nConnect to the \nproduction\n environment using \nconcourse shell\n:\n\n\n\n\nconcourse shell -e production\n\n\n\n\n\n\n\nConnect to the \nproduction\n environment using the \nJava Driver\n:\n\n\n\n\nConcourse\n \nconcourse\n \n=\n \nConcourse\n.\nconnect\n(\n\"production\"\n);\n\n\n\n\n\n\n\n\nWarning\n\n\nIt is \nnot\n possible to interact with data in multiple environments simultaneously.\n\n\n\n\nCreate an Environment\n#\n\n\nIf an environment does not exist, Concourse creates it when you first store data within the environment. As such, you can connect to a non-existent environment and perform standard operations.\n\n\nFor a list of restrictions on environment names, see \nNaming Restrictions\n.",
+            "title": "Introduction"
+        },
+        {
+            "location": "/introduction/#introduction-to-concourse",
+            "text": "Concourse is an  open source  self-tuning database warehouse that provides  strong consistency ,  decentralized coordination  and  optimistic availability . Concourse takes the best ideas from SQL and NoSQL databases to provide an intuitive and scalable platform for both transaction and analytic workflows.",
+            "title": "Introduction to Concourse"
+        },
+        {
+            "location": "/introduction/#document-graph-database",
+            "text": "Concourse is a document-graph database.  A  record  in Concourse is a  schemaless  document, composed of a  unique id  and one or more fields. Each field is labeled with a  key  and may contain one or more distinct  primitive values . Additionally, fields may contain  links  to other records, which facilitates modeling a rich graph of descriptive relationships.  Concourse records are similar to linked  JSON  objects:  The  document-graph  data model is ideal for development:   Intuitively mirrors the way that developers think about data.  Makes few assumptions and adapts to application changes without translation (goodbye  object-relational impedance mismatch ).  Models complex relationships with referential integrity while avoiding hacks.",
+            "title": "Document-Graph Database"
+        },
+        {
+            "location": "/introduction/#automatic-indexing",
+            "text": "Concourse  automatically indexes  data for search and analytics while guaranteeing  constant time writes  that are incredibly fast. This eliminates the need to plan queries in advance because Concourse fully supports ad-hoc, range, and predicate queries and caches frequently requested data for optimal performance.",
+            "title": "Automatic Indexing"
+        },
+        {
+            "location": "/introduction/#version-control",
+            "text": "Concourse  automatically tracks changes  to data\u2013like Git does for source code\u2013giving the power to  query data from the past ,  audit  changes on the fly and  revert  to previous states without downtime. Version control in Concourse makes it easy to build applications that leverage definitive data across time.",
+            "title": "Version Control"
+        },
+        {
+            "location": "/introduction/#acid-transactions",
+            "text": "Concourse uses a  novel protocol  to provide serializable distributed  transactions . Internally, dynamic resource management and  just-in-time locking  ensure that transactions have both the highest performance and strongest consistency possible. So there is no need to guess when your data will eventually become consistent. When Concourse responds to a query, you can  trust the results immediately .  By default, each change is  autocommited  and written to the database immediately. However, you can explicitly start a  transaction  to control when a group of changes are  atomically   committed  or  aborted  using the  stage  functionality.   Start a transaction within  concourse shell :   [ default/cash ] $ stage   Use a  transaction  to atomically transfer $50 from one account to another in  Java :   concourse . stage ();  try   { \n   int   balance1   =   concourse . get ( \"balance\" ,   1 ); \n   int   balance2   =   concourse . get ( \"balance\" ,   2 ); \n   concourse . set ( \"balance\" ,   balance1   +   50 ,   1 ); \n   concourse . set ( \"balance\" ,   balance2   -   50 ,   2 ); \n   concourse . commit ();  }  catch   ( TransactionException   e )   { \n   concourse . abort ();  }    The same example above using Java  lambdas :   concourse . stage (()   ->   { \n   int   balance1   =   concourse . get ( \"balance\" ,   1 ); \n   int   balance2   =   concourse . get ( \"balance\" ,   2 ); \n   concourse . set ( \"balance\" ,   balance1   +   50 ,   1 ); \n   concourse . set ( \"balance\" ,   balance2   -   50 ,   2 );  });",
+            "title": "ACID Transactions"
+        },
+        {
+            "location": "/introduction/#environments",
+            "text": "Concourse separates records into  environments , which are similar to  databases ,  keyspaces , or  schemas  in a other database systems. Beyond that, Concourse  doesn\u2019t  impose any other organization such as tables or collections.  You can specify the desired environment when connecting to Concourse. If no environment is specified, the  default_environment  defined in the  concourse.prefs  configuration file is used.   Connect to the  production  environment using  concourse shell :   concourse shell -e production   Connect to the  production  environment using the  Java Driver :   Concourse   concourse   =   Concourse . connect ( \"production\" );    Warning  It is  not  possible to interact with data in multiple environments simultaneously.",
+            "title": "Environments"
+        },
+        {
+            "location": "/introduction/#create-an-environment",
+            "text": "If an environment does not exist, Concourse creates it when you first store data within the environment. As such, you can connect to a non-existent environment and perform standard operations.  For a list of restrictions on environment names, see  Naming Restrictions .",
+            "title": "Create an Environment"
+        },
+        {
+            "location": "/installation/",
+            "text": "Install Concourse\n#\n\n\n\n\nSystem Requirements\n\n\n\n\nJRE or JDK 1.8+\n\n\nAt least \n256MB\n of available system memory\n\n\nLinux or macOS\n\n\n\n\n\n\nBinary Install\n#\n\n\n\n\n\n\nDownload the installer.\n From the terminal, navigate to the location where you want to install Concourse and download the installer for the latest version:\n\n\n  curl -o concourse-server.bin -L http://concoursedb.com/download/latest\n\n\n\n\n\n\n\n\n\nRun the installer.\n Execute the downloaded \n.bin\n file. You\u2019ll be prompted to enter an administrator password so the installer can add the Concourse scripts and log files on your $PATH. This is \nrecommended\n but not required.\n\n\n  sh concourse-server.bin\n\n\n\n\n\n\n\n\n\nStart Concourse.\n Concourse ships with reasonable default configuration so you can use it right out-the-box! If necessary, you can configure how Concourse runs by editing the \nconcourse.prefs\n configuration file located in Concourse\u2019s \nhome directory\n.\n\n\n  concourse start",
+            "title": "Installation"
+        },
+        {
+            "location": "/installation/#install-concourse",
+            "text": "System Requirements   JRE or JDK 1.8+  At least  256MB  of available system memory  Linux or macOS",
+            "title": "Install Concourse"
+        },
+        {
+            "location": "/installation/#binary-install",
+            "text": "Download the installer.  From the terminal, navigate to the location where you want to install Concourse and download the installer for the latest version:    curl -o concourse-server.bin -L http://concoursedb.com/download/latest    Run the installer.  Execute the downloaded  .bin  file. You\u2019ll be prompted to enter an administrator password so the installer can add the Concourse scripts and log files on your $PATH. This is  recommended  but not required.    sh concourse-server.bin    Start Concourse.  Concourse ships with reasonable default configuration so you can use it right out-the-box! If necessary, you can configure how Concourse runs by editing the  concourse.prefs  configuration file located in Concourse\u2019s  home directory .    concourse start",
+            "title": "Binary Install"
+        },
+        {
+            "location": "/shell/",
+            "text": "Concourse Shell\n#\n\n\nThe concourse \nshell\n is a built-in interface to interact with Concourse. The concourse \nshell\n is backed by the full power of the \nGroovy\n scripting language, so you can use it to dynamically query and update data.\n\n\nMost examples in the \nConcourse Guide\n use concourse \nshell\n. Most client \ndrivers\n also provide a similar interface to Concourse.\n\n\n\n\nWarning\n\n\nMake sure that Concourse is running before attempting to start concourse \nshell\n.\n\n\n\n\nTo start concourse \nshell\n and connect to the Concourse instance running on \nlocalhost\n with the \ndefault port\n into the \ndefault environment\n:\n\n\n\n\nAt a prompt in a terminal window:\nconcourse shell\n\n\n\n\n\n\n\n\n\nChanging connection parameters\n#\n\n\nYou can connect to a different environment or a Concourse instance running on a different server and/or a different port by specifying any combination of the the following command line options:\n\n\nUsage\n:\n \nconcourse\n-\nshell\n \n[\noptions\n]\n\n  \nOptions\n:\n\n    \n-\ne\n,\n \n--\nenvironment\n\n       \nThe\n \nenvironment\n \nof\n \nthe\n \nConcourse\n \nServer\n \nto\n \nuse\n\n       \nDefault\n:\n \n<\nempty\n \nstring\n>\n\n    \n-\nh\n,\n \n--\nhost\n\n       \nThe\n \nhostname\n \nwhere\n \nthe\n \nConcourse\n \nServer\n \nis\n \nlocated\n\n       \nDefault\n:\n \nlocalhost\n\n    \n-\np\n,\n \n--\nport\n\n       \nThe\n \nport\n \non\n \nwhich\n \nthe\n \nConcourse\n \nServer\n \nis\n \nlistening\n\n       \nDefault\n:\n \n1717\n\n    \n-\nu\n,\n \n--\nusername\n\n       \nThe\n \nusername\n \nwith\n \nwhich\n \nto\n \nconnect\n\n       \nDefault\n:\n \nadmin\n\n\n\n\n\n\nWorking with the concourse \nshell\n#\n\n\nAd hoc commands\n#\n\n\nRun Commands File\n#\n\n\nYou can use a \nrun commands\n file to seed the shell with a script that is run before the prompt is displayed for the first time. By default, concourse \nshell\n checks the user\u2019s \nHOME\n directory for a groovy file named \n.cashrc\n.\n\n\nAlternatively, you can specify a different \nrun-commands\n file by starting concourse shell using the \n--run-commands\n or \n-rc\n option:\n\n\nconcourse shell --run-commands /path/to/run-commands-file\n\n\n\n\n\nUsage\n#\n\n\nUsing a \nrun commands\n file allows you to automatically seed each concourse shell session with common configuration.\n\n\nNOTE\n: The script can access all the standard variables and methods defined in the shell\u2019s environment.\n\n\nStartup Commands\n#\n\n\nCustom Functions\n#\n\n\nYou can define custom functions in the \nrun commands\n file using standard groovy syntax. Custom functions are added to the shell\u2019s namespace so they can be invoked by the interpreter; however they are \nnot run\n on startup.\n\n\n\n\nFor example, create a function to display all the keys across all records in Concourse:\n\n\n\n\ndef\n \nshowKeys\n()\n \n{\n\n  \nallkeys\n \n=\n \ndescribe\n(\ninventory\n()).\nvalues\n()\n\n  \nresult\n \n=\n \n[]\n\n  \nallkeys\n.\neach\n \n{\n \nkeys\n \n->\n\n    \nkeys\n.\neach\n \n{\n \nkey\n \n->\n\n      \nresult\n \n<<\n \nkey\n\n    \n}\n\n  \n}\n\n  \nresult\n.\ntoSet\n()\n\n\n}\n\n\n\n\n\n\n\n\nLaunch concourse shell and invoke the function:\n\n\n\n\n[\ndefault/cash\n]\n$ showKeys\n()\n\nReturned \n'[manager, name, follows, age, friends]'\n in \n0\n.086 sec\n\n\n\n\n\nCustom Variables\n#\n\n\nInteracting with Concourse\n#",
+            "title": "Shell"
+        },
+        {
+            "location": "/shell/#concourse-shell",
+            "text": "The concourse  shell  is a built-in interface to interact with Concourse. The concourse  shell  is backed by the full power of the  Groovy  scripting language, so you can use it to dynamically query and update data.  Most examples in the  Concourse Guide  use concourse  shell . Most client  drivers  also provide a similar interface to Concourse.   Warning  Make sure that Concourse is running before attempting to start concourse  shell .   To start concourse  shell  and connect to the Concourse instance running on  localhost  with the  default port  into the  default environment :   At a prompt in a terminal window: concourse shell",
+            "title": "Concourse Shell"
+        },
+        {
+            "location": "/shell/#changing-connection-parameters",
+            "text": "You can connect to a different environment or a Concourse instance running on a different server and/or a different port by specifying any combination of the the following command line options:  Usage :   concourse - shell   [ options ] \n   Options : \n     - e ,   -- environment \n        The   environment   of   the   Concourse   Server   to   use \n        Default :   < empty   string > \n     - h ,   -- host \n        The   hostname   where   the   Concourse   Server   is   located \n        Default :   localhost \n     - p ,   -- port \n        The   port   on   which   the   Concourse   Server   is   listening \n        Default :   1717 \n     - u ,   -- username \n        The   username   with   which   to   connect \n        Default :   admin",
+            "title": "Changing connection parameters"
+        },
+        {
+            "location": "/shell/#working-with-the-concourse-shell",
+            "text": "",
+            "title": "Working with the concourse shell"
+        },
+        {
+            "location": "/shell/#ad-hoc-commands",
+            "text": "",
+            "title": "Ad hoc commands"
+        },
+        {
+            "location": "/shell/#run-commands-file",
+            "text": "You can use a  run commands  file to seed the shell with a script that is run before the prompt is displayed for the first time. By default, concourse  shell  checks the user\u2019s  HOME  directory for a groovy file named  .cashrc .  Alternatively, you can specify a different  run-commands  file by starting concourse shell using the  --run-commands  or  -rc  option:  concourse shell --run-commands /path/to/run-commands-file",
+            "title": "Run Commands File"
+        },
+        {
+            "location": "/shell/#usage",
+            "text": "Using a  run commands  file allows you to automatically seed each concourse shell session with common configuration.  NOTE : The script can access all the standard variables and methods defined in the shell\u2019s environment.",
+            "title": "Usage"
+        },
+        {
+            "location": "/shell/#startup-commands",
+            "text": "",
+            "title": "Startup Commands"
+        },
+        {
+            "location": "/shell/#custom-functions",
+            "text": "You can define custom functions in the  run commands  file using standard groovy syntax. Custom functions are added to the shell\u2019s namespace so they can be invoked by the interpreter; however they are  not run  on startup.   For example, create a function to display all the keys across all records in Concourse:   def   showKeys ()   { \n   allkeys   =   describe ( inventory ()). values () \n   result   =   [] \n   allkeys . each   {   keys   -> \n     keys . each   {   key   -> \n       result   <<   key \n     } \n   } \n   result . toSet ()  }    Launch concourse shell and invoke the function:   [ default/cash ] $ showKeys () \nReturned  '[manager, name, follows, age, friends]'  in  0 .086 sec",
+            "title": "Custom Functions"
+        },
+        {
+            "location": "/shell/#custom-variables",
+            "text": "",
+            "title": "Custom Variables"
+        },
+        {
+            "location": "/shell/#interacting-with-concourse",
+            "text": "",
+            "title": "Interacting with Concourse"
+        },
+        {
+            "location": "/writes/",
+            "text": "Writing Data\n#\n\n\nCreate a new Record\n#\n\n\nA new record is created using the \ninsert\n method.\n\n\nData can be represented in the form of either a JSON formatted string, a \njava.util.Map<String, Set<Object>>\n or a \ncom.google.common.collect.Multimap<String, Object>\n.\n\n\ninsert({\n  \"name\": \"Jeff Nelson\",\n  \"company\": \"Cinchapi\",\n  \"age\": 100,\n})\n\n\n\n\n\nAdding values\n#\n\n\nSetting values\n#\n\n\nClearing values\n#\n\n\nAtomic Writes\n#\n\n\nSimulating a unique index\n#",
+            "title": "Writes"
+        },
+        {
+            "location": "/writes/#writing-data",
+            "text": "",
+            "title": "Writing Data"
+        },
+        {
+            "location": "/writes/#create-a-new-record",
+            "text": "A new record is created using the  insert  method.  Data can be represented in the form of either a JSON formatted string, a  java.util.Map<String, Set<Object>>  or a  com.google.common.collect.Multimap<String, Object> .  insert({\n  \"name\": \"Jeff Nelson\",\n  \"company\": \"Cinchapi\",\n  \"age\": 100,\n})",
+            "title": "Create a new Record"
+        },
+        {
+            "location": "/writes/#adding-values",
+            "text": "",
+            "title": "Adding values"
+        },
+        {
+            "location": "/writes/#setting-values",
+            "text": "",
+            "title": "Setting values"
+        },
+        {
+            "location": "/writes/#clearing-values",
+            "text": "",
+            "title": "Clearing values"
+        },
+        {
+            "location": "/writes/#atomic-writes",
+            "text": "",
+            "title": "Atomic Writes"
+        },
+        {
+            "location": "/writes/#simulating-a-unique-index",
+            "text": "",
+            "title": "Simulating a unique index"
+        },
+        {
+            "location": "/reads/",
+            "text": "Reading Data\n#\n\n\nSelecting all values\n#\n\n\nGetting the most recent value\n#\n\n\nBrowsing values across a key\n#",
+            "title": "Reads"
+        },
+        {
+            "location": "/reads/#reading-data",
+            "text": "",
+            "title": "Reading Data"
+        },
+        {
+            "location": "/reads/#selecting-all-values",
+            "text": "",
+            "title": "Selecting all values"
+        },
+        {
+            "location": "/reads/#getting-the-most-recent-value",
+            "text": "",
+            "title": "Getting the most recent value"
+        },
+        {
+            "location": "/reads/#browsing-values-across-a-key",
+            "text": "",
+            "title": "Browsing values across a key"
+        },
+        {
+            "location": "/queries/",
+            "text": "Queries\n#\n\n\nConcourse Criteria Language (CCL)\n#\n\n\nCriteria Builder\n#",
+            "title": "Queries"
+        },
+        {
+            "location": "/queries/#queries",
+            "text": "",
+            "title": "Queries"
+        },
+        {
+            "location": "/queries/#concourse-criteria-language-ccl",
+            "text": "",
+            "title": "Concourse Criteria Language (CCL)"
+        },
+        {
+            "location": "/queries/#criteria-builder",
+            "text": "",
+            "title": "Criteria Builder"
+        },
+        {
+            "location": "/imports/",
+            "text": "Importing Data\n#\n\n\nResolution\n#",
+            "title": "Imports"
+        },
+        {
+            "location": "/imports/#importing-data",
+            "text": "",
+            "title": "Importing Data"
+        },
+        {
+            "location": "/imports/#resolution",
+            "text": "",
+            "title": "Resolution"
+        },
+        {
+            "location": "/transactions/",
+            "text": "Transactions\n#\n\n\nSerializable Isolation\n#\n\n\nJust-in-Time Locking\n#",
+            "title": "Transactions"
+        },
+        {
+            "location": "/transactions/#transactions",
+            "text": "",
+            "title": "Transactions"
+        },
+        {
+            "location": "/transactions/#serializable-isolation",
+            "text": "",
+            "title": "Serializable Isolation"
+        },
+        {
+            "location": "/transactions/#just-in-time-locking",
+            "text": "",
+            "title": "Just-in-Time Locking"
+        },
+        {
+            "location": "/time-travel/",
+            "text": "Time Travel\n#\n\n\nHistorical Reads\n#\n\n\nHistorical Queries\n#\n\n\nHistorical Browse\n#\n\n\nAudit\n#\n\n\nChronologize\n#",
+            "title": "Time Travel"
+        },
+        {
+            "location": "/time-travel/#time-travel",
+            "text": "",
+            "title": "Time Travel"
+        },
+        {
+            "location": "/time-travel/#historical-reads",
+            "text": "",
+            "title": "Historical Reads"
+        },
+        {
+            "location": "/time-travel/#historical-queries",
+            "text": "",
+            "title": "Historical Queries"
+        },
+        {
+            "location": "/time-travel/#historical-browse",
+            "text": "",
+            "title": "Historical Browse"
+        },
+        {
+            "location": "/time-travel/#audit",
+            "text": "",
+            "title": "Audit"
+        },
+        {
+            "location": "/time-travel/#chronologize",
+            "text": "",
+            "title": "Chronologize"
+        },
+        {
+            "location": "/aggregations/",
+            "text": "Aggregations and Calculations in Concourse\n#\n\n\n\n\nComing Soon\n\n\nA feature to perform aggregations and calculations in Concourse will be \nreleased in version 0.6\n.",
+            "title": "Aggregations"
+        },
+        {
+            "location": "/aggregations/#aggregations-and-calculations-in-concourse",
+            "text": "Coming Soon  A feature to perform aggregations and calculations in Concourse will be  released in version 0.6 .",
+            "title": "Aggregations and Calculations in Concourse"
+        },
+        {
+            "location": "/search/",
+            "text": "Search\n#",
+            "title": "Search"
+        },
+        {
+            "location": "/search/#search",
+            "text": "",
+            "title": "Search"
+        },
+        {
+            "location": "/graph/",
+            "text": "Graph Operations\n#\n\n\nLinking Records\n#\n\n\nLink Queries\n#\n\n\nLink Navigation\n#",
+            "title": "Graph"
+        },
+        {
+            "location": "/graph/#graph-operations",
+            "text": "",
+            "title": "Graph Operations"
+        },
+        {
+            "location": "/graph/#linking-records",
+            "text": "",
+            "title": "Linking Records"
+        },
+        {
+            "location": "/graph/#link-queries",
+            "text": "",
+            "title": "Link Queries"
+        },
+        {
+            "location": "/graph/#link-navigation",
+            "text": "",
+            "title": "Link Navigation"
+        },
+        {
+            "location": "/configuration/",
+            "text": "",
+            "title": "Configuration"
+        },
+        {
+            "location": "/administration/",
+            "text": "Concourse Administration\n#\n\n\nDebugging\n#\n\n\nDebug data files\n#\n\n\nRetrieve a JVM heap dump\n#\n\n\nRetrieve a JVM thread dump\n#\n\n\nAd-hoc debugging with JMX\n#\n\n\nEnvironments\n#\n\n\nPlugins\n#\n\n\nUsers\n#",
+            "title": "Administration"
+        },
+        {
+            "location": "/administration/#concourse-administration",
+            "text": "",
+            "title": "Concourse Administration"
+        },
+        {
+            "location": "/administration/#debugging",
+            "text": "",
+            "title": "Debugging"
+        },
+        {
+            "location": "/administration/#debug-data-files",
+            "text": "",
+            "title": "Debug data files"
+        },
+        {
+            "location": "/administration/#retrieve-a-jvm-heap-dump",
+            "text": "",
+            "title": "Retrieve a JVM heap dump"
+        },
+        {
+            "location": "/administration/#retrieve-a-jvm-thread-dump",
+            "text": "",
+            "title": "Retrieve a JVM thread dump"
+        },
+        {
+            "location": "/administration/#ad-hoc-debugging-with-jmx",
+            "text": "",
+            "title": "Ad-hoc debugging with JMX"
+        },
+        {
+            "location": "/administration/#environments",
+            "text": "",
+            "title": "Environments"
+        },
+        {
+            "location": "/administration/#plugins",
+            "text": "",
+            "title": "Plugins"
+        },
+        {
+            "location": "/administration/#users",
+            "text": "",
+            "title": "Users"
+        },
+        {
+            "location": "/plugins/",
+            "text": "Plugins\n#\n\n\nConcourse is extensible via plugins that enhance the database\u2019s core functionality.\n\n\nEach Concourse plugin runs alongside the database in a separate process, which maximizes safety and stability. Even though plugins are sandboxed, they have privileged access to the database through a well defined API over a secure communication channel.\n\n\nNext Steps\n#\n\n\n\n\nLearn more about \nusing\n Concourse plugins.\n\n\nLearn more about \ndeveloping\n Concourse plugins.\n\n\nVisit the \nCinchapi marketplace\n to download Concourse plugins.",
+            "title": "Overview"
+        },
+        {
+            "location": "/plugins/#plugins",
+            "text": "Concourse is extensible via plugins that enhance the database\u2019s core functionality.  Each Concourse plugin runs alongside the database in a separate process, which maximizes safety and stability. Even though plugins are sandboxed, they have privileged access to the database through a well defined API over a secure communication channel.",
+            "title": "Plugins"
+        },
+        {
+            "location": "/plugins/#next-steps",
+            "text": "Learn more about  using  Concourse plugins.  Learn more about  developing  Concourse plugins.  Visit the  Cinchapi marketplace  to download Concourse plugins.",
+            "title": "Next Steps"
+        },
+        {
+            "location": "/plugins/usage/",
+            "text": "Using Plugins\n#\n\n\nUse the \nconcourse plugins\n command to manage plugins.\n\n\nInstallation\n#\n\n\nYou can install plugins using a local plugin \n.zip\n package or by downloading from the the \nmarketplace\n.\n\n\nInstall a local plugin package\n#\n\n\nconcourse plugin install </path/to/plugin>\n\n\n\n\n\nInstall a plugin from the marketplace\n#\n\n\nconcourse plugin install <plugin-name>\n\n\n\n\n\nInstalling multiple plugins\n#\n\n\nInstall all local plugin packages within a directory\n#\n\n\nIf one of the arguments given to the \nconcourse plugin install\n command is a directory, all the plugin packages in that directory will be installed.\n\n\nconcourse plugin install </path/to/directory>\n\n\n\n\n\nInstall multiple local plugin packages\n#\n\n\nYou can specify multiple local plugin packages as arguments to the \nconcourse plugin install\n command.\n\n\nconcourse plugin install </path/to/plugin1> </path/to/plugin2> ... </path/to/plguinN>\n\n\n\n\n\nInstall multiple plugins from the marketplace\n#\n\n\nYou can specify multiple marketplace plugin names as arguments to the \nconcourse plugin install\n command.\n\n\nconcourse plugin install <plugin-name1> <plugin-name2>\n\n\n\n\n\nInvoking plugin methods\n#\n\n\nPlugin methods are automatically added to the Concourse API and can be called from any driver using the \ninvokePlugin\n method.\n\n\ninvokePlugin(pluginId, methodName, methodArgs...)",
+            "title": "Using Plugins"
+        },
+        {
+            "location": "/plugins/usage/#using-plugins",
+            "text": "Use the  concourse plugins  command to manage plugins.",
+            "title": "Using Plugins"
+        },
+        {
+            "location": "/plugins/usage/#installation",
+            "text": "You can install plugins using a local plugin  .zip  package or by downloading from the the  marketplace .",
+            "title": "Installation"
+        },
+        {
+            "location": "/plugins/usage/#install-a-local-plugin-package",
+            "text": "concourse plugin install </path/to/plugin>",
+            "title": "Install a local plugin package"
+        },
+        {
+            "location": "/plugins/usage/#install-a-plugin-from-the-marketplace",
+            "text": "concourse plugin install <plugin-name>",
+            "title": "Install a plugin from the marketplace"
+        },
+        {
+            "location": "/plugins/usage/#installing-multiple-plugins",
+            "text": "",
+            "title": "Installing multiple plugins"
+        },
+        {
+            "location": "/plugins/usage/#install-all-local-plugin-packages-within-a-directory",
+            "text": "If one of the arguments given to the  concourse plugin install  command is a directory, all the plugin packages in that directory will be installed.  concourse plugin install </path/to/directory>",
+            "title": "Install all local plugin packages within a directory"
+        },
+        {
+            "location": "/plugins/usage/#install-multiple-local-plugin-packages",
+            "text": "You can specify multiple local plugin packages as arguments to the  concourse plugin install  command.  concourse plugin install </path/to/plugin1> </path/to/plugin2> ... </path/to/plguinN>",
+            "title": "Install multiple local plugin packages"
+        },
+        {
+            "location": "/plugins/usage/#install-multiple-plugins-from-the-marketplace",
+            "text": "You can specify multiple marketplace plugin names as arguments to the  concourse plugin install  command.  concourse plugin install <plugin-name1> <plugin-name2>",
+            "title": "Install multiple plugins from the marketplace"
+        },
+        {
+            "location": "/plugins/usage/#invoking-plugin-methods",
+            "text": "Plugin methods are automatically added to the Concourse API and can be called from any driver using the  invokePlugin  method.  invokePlugin(pluginId, methodName, methodArgs...)",
+            "title": "Invoking plugin methods"
+        },
+        {
+            "location": "/plugins/development/",
+            "text": "Developing Plugins\n#\n\n\nGetting Started\n#\n\n\nConcourse plugins must be implemented as Java classes that extend \ncom.cinchapi.concourse.server.plugin.Plugin\n. To get started, create a Java project that depends on the \nconcourse-plugin-core\n framework.\n\n\nCreate a build.gradle file\n#\n\n\nplugins\n \n{\n\n    \nid\n \n\"com.cinchapi.concourse-plugin\"\n \nversion\n \n\"1.0.14\"\n\n    \nid\n \n'java'\n\n    \nid\n \n'eclipse'\n\n    \nid\n \n'maven'\n\n\n}\n\n\n\ngroup\n \n=\n \n'com.cinchapi'\n\n\nversion\n  \n=\n \ngetVersion\n()\n\n\n\n// Set the version for all Concourse dependencies\n\n\next\n.\nconcourseVersion\n \n=\n \n'0.7.0'\n\n\n\n// Configure Concourse plugin\n\n\nbundle\n \n{\n\n    \nbundleName\n \nproject\n.\nname\n\n\n}\n\n\n\ntask\n \nwrapper\n(\ntype:\n \nWrapper\n)\n \n{\n\n    \ngradleVersion\n \n=\n \n'3.0'\n\n\n}\n\n\n\nrepositories\n \n{\n\n    \nmavenCentral\n()\n\n\n}\n\n\n\ndependencies\n \n{\n\n    \ncompile\n \ngroup:\n \n'com.cinchapi'\n,\n \nname:\n \n'concourse-plugin-core'\n,\n\n      \nversion:\n \nconcourseVersion\n\n\n    \ntestCompile\n \n'junit:junit:4.11'\n\n    \ntestCompile\n \ngroup:\n \n'com.cinchapi'\n,\n \nname:\n \n'concourse-ete-test-core'\n,\n\n      \nversion:\n \nconcourseVersion\n\n\n}\n\n\n\n\n\n\nDownload dependencies and generate IDE metadata\n#\n\n\n./gradlew clean eclipse\n\n\n\n\n\nImplement the plugin\n#\n\n\npackage\n \ncom.company.concourse.plugin.sample\n;\n\n\n\nimport\n \ncom.cinchapi.concourse.server.plugin.Plugin\n;\n\n\n\n/**\n\n\n * Sample Plugin Boilerplate\n\n\n */\n\n\npublic\n \nclass\n \nSamplePlugin\n \nextends\n \nPlugin\n \n{\n\n\n    \n/**\n\n\n     * Construct a new instance.\n\n\n     *\n\n\n     * @param fromServer\n\n\n     * @param fromPlugin\n\n\n     */\n\n    \npublic\n \nSample\n(\nString\n \nfromServer\n,\n \nString\n \nfromPlugin\n)\n \n{\n\n        \nsuper\n(\nfromServer\n,\n \nfromPlugin\n);\n\n    \n}\n\n\n\n}\n\n\n\n\n\n\nAny instance methods that are added to the plugin class will be dynamically added to the Concourse API.\n\n\nCreate the plugin package\n#\n\n\n./gradlew bundleZip\n\n\n\n\n\nCheck the \nbuild/distributions\n directory to see the generated \n.zip\n plugin package.\n\n\nAccessing Concourse within a Plugin\n#\n\n\nConcourse plugins have privileged access to the database using a special API. To interact with Concourse, use the \nruntime\n method inside the plugin class.\n\n\npublic\n \nvoid\n \nsampleWriteMethod\n(\nString\n \nkey\n,\n \nObject\n \nvalue\n)\n \n{\n\n  \nruntime\n.\naddKeyValue\n(\nkey\n,\n \nvalue\n);\n\n\n}\n\n\n\npublic\n \nObject\n \nsampleReadMethod\n(\nString\n \nkey\n)\n \n{\n\n  \n//TODO: fixme\n\n\n}\n\n\n\n\n\n\nIf you need to access Concourse from a class that does not extend \nPlugin\n (i.e. a utility class) you can interact with the runtime by calling \nPluginRuntime.getRuntime()\n.\n\n\nBackground Requests\n#\n\n\nEach Plugin has access to the host Concourse instance",
+            "title": "Developing Plugins"
+        },
+        {
+            "location": "/plugins/development/#developing-plugins",
+            "text": "",
+            "title": "Developing Plugins"
+        },
+        {
+            "location": "/plugins/development/#getting-started",
+            "text": "Concourse plugins must be implemented as Java classes that extend  com.cinchapi.concourse.server.plugin.Plugin . To get started, create a Java project that depends on the  concourse-plugin-core  framework.",
+            "title": "Getting Started"
+        },
+        {
+            "location": "/plugins/development/#create-a-buildgradle-file",
+            "text": "plugins   { \n     id   \"com.cinchapi.concourse-plugin\"   version   \"1.0.14\" \n     id   'java' \n     id   'eclipse' \n     id   'maven'  }  group   =   'com.cinchapi'  version    =   getVersion ()  // Set the version for all Concourse dependencies  ext . concourseVersion   =   '0.7.0'  // Configure Concourse plugin  bundle   { \n     bundleName   project . name  }  task   wrapper ( type:   Wrapper )   { \n     gradleVersion   =   '3.0'  }  repositories   { \n     mavenCentral ()  }  dependencies   { \n     compile   group:   'com.cinchapi' ,   name:   'concourse-plugin-core' , \n       version:   concourseVersion \n\n     testCompile   'junit:junit:4.11' \n     testCompile   group:   'com.cinchapi' ,   name:   'concourse-ete-test-core' , \n       version:   concourseVersion  }",
+            "title": "Create a build.gradle file"
+        },
+        {
+            "location": "/plugins/development/#download-dependencies-and-generate-ide-metadata",
+            "text": "./gradlew clean eclipse",
+            "title": "Download dependencies and generate IDE metadata"
+        },
+        {
+            "location": "/plugins/development/#implement-the-plugin",
+            "text": "package   com.company.concourse.plugin.sample ;  import   com.cinchapi.concourse.server.plugin.Plugin ;  /**   * Sample Plugin Boilerplate   */  public   class   SamplePlugin   extends   Plugin   { \n\n     /**       * Construct a new instance.       *       * @param fromServer       * @param fromPlugin       */ \n     public   Sample ( String   fromServer ,   String   fromPlugin )   { \n         super ( fromServer ,   fromPlugin ); \n     }  }   Any instance methods that are added to the plugin class will be dynamically added to the Concourse API.",
+            "title": "Implement the plugin"
+        },
+        {
+            "location": "/plugins/development/#create-the-plugin-package",
+            "text": "./gradlew bundleZip  Check the  build/distributions  directory to see the generated  .zip  plugin package.",
+            "title": "Create the plugin package"
+        },
+        {
+            "location": "/plugins/development/#accessing-concourse-within-a-plugin",
+            "text": "Concourse plugins have privileged access to the database using a special API. To interact with Concourse, use the  runtime  method inside the plugin class.  public   void   sampleWriteMethod ( String   key ,   Object   value )   { \n   runtime . addKeyValue ( key ,   value );  }  public   Object   sampleReadMethod ( String   key )   { \n   //TODO: fixme  }   If you need to access Concourse from a class that does not extend  Plugin  (i.e. a utility class) you can interact with the runtime by calling  PluginRuntime.getRuntime() .",
+            "title": "Accessing Concourse within a Plugin"
+        },
+        {
+            "location": "/plugins/development/#background-requests",
+            "text": "Each Plugin has access to the host Concourse instance",
+            "title": "Background Requests"
+        },
+        {
+            "location": "/distributed/",
+            "text": "Distributed Concourse\n#\n\n\n\n\nComing Soon\n\n\nA feature to form a distributed cluster with multiple Concourse nodes will be \nreleased in version 0.6\n.",
+            "title": "Distributed"
+        },
+        {
+            "location": "/distributed/#distributed-concourse",
+            "text": "Coming Soon  A feature to form a distributed cluster with multiple Concourse nodes will be  released in version 0.6 .",
+            "title": "Distributed Concourse"
+        },
+        {
+            "location": "/internals/",
+            "text": "",
+            "title": "Internals"
+        },
+        {
+            "location": "/glossary/",
+            "text": "Glossary\n#\n\n\nCaptain\n#\n\n\nCluster\n#\n\n\nA group of Concourse \nnodes\n amongst which data is \npartitioned\n and \nreplicated\n, but together form a single logical database.  \n\n\nCohort\n#\n\n\nCoordinator\n#\n\n\nThe \nnode\n to which a client connects to perform an operation. The coordinator is responsible for routing the request to the appropriate node(s) within the \ncluster\n and returning the result to the client.\n\n\nIn Concourse, coordinators are chosen per operation and any node may serve as a coordinator.\n\n\nEnsemble Protocol\n#\n\n\nGossip Protocol\n#\n\n\nKey\n#\n\n\nLeader\n#\n\n\nNode\n#\n\n\nA Concourse instance that is a member of distributed \ncluster\n.\n\n\nOptimistic Availability\n#\n\n\nA property of \ndistributed systems\n that allows tolerance for arbitrary node failure while preserving \navailability\n for an operation as long as the \ncoordinator\n and at least one relevant process agree on the state of the system. In laymen\u2019s terms: given sufficient \npartitioning\n and \nreplication\n there is optimism that the system remains available in the face of failure or latency.\n\n\nPartition\n#\n\n\nA subset of nodes in a distributed \ncluster\n that each only contain data certain \ntoken\n ranges. Data is partitioned within Concourse to better distributed load across the cluster.\n\n\nRecord\n#\n\n\nA \nschemaless\n group of fields mapping \nkeys\n to \nvalues\n. A single record should map to a single person, place or thing in the real world.\n\n\nReplica\n#\n\n\nA node\n\n\nSchemaless\n#\n\n\nA Concourse feature that allows users to store data without first specifying the data format or data types with the database, and\n2. allows records within the database to contain different formats and data types.\n\n\nStrong Consistency\n#\n\n\nA property of \ndistributed systems\n where all processes \nobserve\n state changes in the same order. According to the \nCAP Theorem\n, distributed database are strongly consistent if every read receives the most recent write or an error, in the event that the most recent write cannot be determined because of network failure or latency.\n\n\nThree-Phase Commit\n#\n\n\nToken\n#\n\n\nValue\n#",
+            "title": "Glossary"
+        },
+        {
+            "location": "/glossary/#glossary",
+            "text": "",
+            "title": "Glossary"
+        },
+        {
+            "location": "/glossary/#captain",
+            "text": "",
+            "title": "Captain"
+        },
+        {
+            "location": "/glossary/#cluster",
+            "text": "A group of Concourse  nodes  amongst which data is  partitioned  and  replicated , but together form a single logical database.",
+            "title": "Cluster"
+        },
+        {
+            "location": "/glossary/#cohort",
+            "text": "",
+            "title": "Cohort"
+        },
+        {
+            "location": "/glossary/#coordinator",
+            "text": "The  node  to which a client connects to perform an operation. The coordinator is responsible for routing the request to the appropriate node(s) within the  cluster  and returning the result to the client.  In Concourse, coordinators are chosen per operation and any node may serve as a coordinator.",
+            "title": "Coordinator"
+        },
+        {
+            "location": "/glossary/#ensemble-protocol",
+            "text": "",
+            "title": "Ensemble Protocol"
+        },
+        {
+            "location": "/glossary/#gossip-protocol",
+            "text": "",
+            "title": "Gossip Protocol"
+        },
+        {
+            "location": "/glossary/#key",
+            "text": "",
+            "title": "Key"
+        },
+        {
+            "location": "/glossary/#leader",
+            "text": "",
+            "title": "Leader"
+        },
+        {
+            "location": "/glossary/#node",
+            "text": "A Concourse instance that is a member of distributed  cluster .",
+            "title": "Node"
+        },
+        {
+            "location": "/glossary/#optimistic-availability",
+            "text": "A property of  distributed systems  that allows tolerance for arbitrary node failure while preserving  availability  for an operation as long as the  coordinator  and at least one relevant process agree on the state of the system. In laymen\u2019s terms: given sufficient  partitioning  and  replication  there is optimism that the system remains available in the face of failure or latency.",
+            "title": "Optimistic Availability"
+        },
+        {
+            "location": "/glossary/#partition",
+            "text": "A subset of nodes in a distributed  cluster  that each only contain data certain  token  ranges. Data is partitioned within Concourse to better distributed load across the cluster.",
+            "title": "Partition"
+        },
+        {
+            "location": "/glossary/#record",
+            "text": "A  schemaless  group of fields mapping  keys  to  values . A single record should map to a single person, place or thing in the real world.",
+            "title": "Record"
+        },
+        {
+            "location": "/glossary/#replica",
+            "text": "A node",
+            "title": "Replica"
+        },
+        {
+            "location": "/glossary/#schemaless",
+            "text": "A Concourse feature that allows users to store data without first specifying the data format or data types with the database, and\n2. allows records within the database to contain different formats and data types.",
+            "title": "Schemaless"
+        },
+        {
+            "location": "/glossary/#strong-consistency",
+            "text": "A property of  distributed systems  where all processes  observe  state changes in the same order. According to the  CAP Theorem , distributed database are strongly consistent if every read receives the most recent write or an error, in the event that the most recent write cannot be determined because of network failure or latency.",
+            "title": "Strong Consistency"
+        },
+        {
+            "location": "/glossary/#three-phase-commit",
+            "text": "",
+            "title": "Three-Phase Commit"
+        },
+        {
+            "location": "/glossary/#token",
+            "text": "",
+            "title": "Token"
+        },
+        {
+            "location": "/glossary/#value",
+            "text": "",
+            "title": "Value"
+        }
+    ]
+}
