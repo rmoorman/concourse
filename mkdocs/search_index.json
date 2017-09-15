@@ -91,6 +91,81 @@
             "title": "Binary Install"
         },
         {
+            "location": "/data-types/",
+            "text": "Data Types\n#\n\n\nConcourse is a dynamically typed database which means that value types are intelligently inferred and comparisons can be made across value types.\n\n\nValues in Concourse can be\n\n\nPrimitive Types\n#\n\n\nBoolean\n#\n\n\nDouble\n#\n\n\nFloat\n#\n\n\nInteger\n#\n\n\nLink\n#\n\n\nA \nLink\n is a pointer to another record. Links are used model relationship graphs within Concourse.\n\n\n\n\nLinks can be created using the \nlink(key, destination, source)\n method.\n\n\nLinks can be \nqueried\n using the \nLINKS_TO\n operator.\n\n\n\n\nLong\n#\n\n\nString\n#\n\n\nTag\n#\n\n\nA \nTag\n is a String that is \nnot\n indexed for full-text search.\n\n\nTimestamp\n#\n\n\nA \nTimestamp\n is a\n\n\nAdvanced Types\n#\n\n\nDynamic Link\n#\n\n\nResolvable Link\n#\n\n\nA \nresolvable link\n is an instruction to create a link to \nall\n the records that match a criteria. Unlike dynamic links, a resolvable link is only evaluated once, at the time of write, so the linked records won\u2019t automatically change as the criteria\u2019s results do.\n\n\n\n\nDo not add resolvable links directly\n\n\nYou cannot use the \nadd\n methods to write resolvable links because the operation would not be atomic. You should only use resolvable links when writing data within a larger blob of information (e.g. a \nMap\n or JSON string being written using the \ninsert\n method). In this case, you can add a resolvable link to the blob using the \nLink.toWhere(criteria)\n method.",
+            "title": "Data Types"
+        },
+        {
+            "location": "/data-types/#data-types",
+            "text": "Concourse is a dynamically typed database which means that value types are intelligently inferred and comparisons can be made across value types.  Values in Concourse can be",
+            "title": "Data Types"
+        },
+        {
+            "location": "/data-types/#primitive-types",
+            "text": "",
+            "title": "Primitive Types"
+        },
+        {
+            "location": "/data-types/#boolean",
+            "text": "",
+            "title": "Boolean"
+        },
+        {
+            "location": "/data-types/#double",
+            "text": "",
+            "title": "Double"
+        },
+        {
+            "location": "/data-types/#float",
+            "text": "",
+            "title": "Float"
+        },
+        {
+            "location": "/data-types/#integer",
+            "text": "",
+            "title": "Integer"
+        },
+        {
+            "location": "/data-types/#link",
+            "text": "A  Link  is a pointer to another record. Links are used model relationship graphs within Concourse.   Links can be created using the  link(key, destination, source)  method.  Links can be  queried  using the  LINKS_TO  operator.",
+            "title": "Link"
+        },
+        {
+            "location": "/data-types/#long",
+            "text": "",
+            "title": "Long"
+        },
+        {
+            "location": "/data-types/#string",
+            "text": "",
+            "title": "String"
+        },
+        {
+            "location": "/data-types/#tag",
+            "text": "A  Tag  is a String that is  not  indexed for full-text search.",
+            "title": "Tag"
+        },
+        {
+            "location": "/data-types/#timestamp",
+            "text": "A  Timestamp  is a",
+            "title": "Timestamp"
+        },
+        {
+            "location": "/data-types/#advanced-types",
+            "text": "",
+            "title": "Advanced Types"
+        },
+        {
+            "location": "/data-types/#dynamic-link",
+            "text": "",
+            "title": "Dynamic Link"
+        },
+        {
+            "location": "/data-types/#resolvable-link",
+            "text": "A  resolvable link  is an instruction to create a link to  all  the records that match a criteria. Unlike dynamic links, a resolvable link is only evaluated once, at the time of write, so the linked records won\u2019t automatically change as the criteria\u2019s results do.   Do not add resolvable links directly  You cannot use the  add  methods to write resolvable links because the operation would not be atomic. You should only use resolvable links when writing data within a larger blob of information (e.g. a  Map  or JSON string being written using the  insert  method). In this case, you can add a resolvable link to the blob using the  Link.toWhere(criteria)  method.",
+            "title": "Resolvable Link"
+        },
+        {
             "location": "/shell/",
             "text": "Concourse Shell\n#\n\n\nThe concourse \nshell\n is a built-in interface to interact with Concourse. The concourse \nshell\n is backed by the full power of the \nGroovy\n scripting language, so you can use it to dynamically query and update data.\n\n\nMost examples in the \nConcourse Guide\n use concourse \nshell\n. Most client \ndrivers\n also provide a similar interface to Concourse.\n\n\n\n\nWarning\n\n\nMake sure that Concourse is running before attempting to start concourse \nshell\n.\n\n\n\n\nTo start concourse \nshell\n and connect to the Concourse instance running on \nlocalhost\n with the \ndefault port\n into the \ndefault environment\n:\n\n\n\n\nAt a prompt in a terminal window:\nconcourse shell\n\n\n\n\n\n\n\n\n\nChanging connection parameters\n#\n\n\nYou can connect to a different environment or a Concourse instance running on a different server and/or a different port by specifying any combination of the the following command line options:\n\n\nUsage\n:\n \nconcourse\n-\nshell\n \n[\noptions\n]\n\n  \nOptions\n:\n\n    \n-\ne\n,\n \n--\nenvironment\n\n       \nThe\n \nenvironment\n \nof\n \nthe\n \nConcourse\n \nServer\n \nto\n \nuse\n\n       \nDefault\n:\n \n<\nempty\n \nstring\n>\n\n    \n-\nh\n,\n \n--\nhost\n\n       \nThe\n \nhostname\n \nwhere\n \nthe\n \nConcourse\n \nServer\n \nis\n \nlocated\n\n       \nDefault\n:\n \nlocalhost\n\n    \n-\np\n,\n \n--\nport\n\n       \nThe\n \nport\n \non\n \nwhich\n \nthe\n \nConcourse\n \nServer\n \nis\n \nlistening\n\n       \nDefault\n:\n \n1717\n\n    \n-\nu\n,\n \n--\nusername\n\n       \nThe\n \nusername\n \nwith\n \nwhich\n \nto\n \nconnect\n\n       \nDefault\n:\n \nadmin\n\n\n\n\n\n\nWorking with the concourse \nshell\n#\n\n\nAd hoc commands\n#\n\n\nRun Commands File\n#\n\n\nYou can use a \nrun commands\n file to seed the shell with a script that is run before the prompt is displayed for the first time. By default, concourse \nshell\n checks the user\u2019s \nHOME\n directory for a groovy file named \n.cashrc\n.\n\n\nAlternatively, you can specify a different \nrun-commands\n file by starting concourse shell using the \n--run-commands\n or \n-rc\n option:\n\n\nconcourse shell --run-commands /path/to/run-commands-file\n\n\n\n\n\nUsage\n#\n\n\nUsing a \nrun commands\n file allows you to automatically seed each concourse shell session with common configuration.\n\n\nNOTE\n: The script can access all the standard variables and methods defined in the shell\u2019s environment.\n\n\nStartup Commands\n#\n\n\nCustom Functions\n#\n\n\nYou can define custom functions in the \nrun commands\n file using standard groovy syntax. Custom functions are added to the shell\u2019s namespace so they can be invoked by the interpreter; however they are \nnot run\n on startup.\n\n\n\n\nFor example, create a function to display all the keys across all records in Concourse:\n\n\n\n\ndef\n \nshowKeys\n()\n \n{\n\n  \nallkeys\n \n=\n \ndescribe\n(\ninventory\n()).\nvalues\n()\n\n  \nresult\n \n=\n \n[]\n\n  \nallkeys\n.\neach\n \n{\n \nkeys\n \n->\n\n    \nkeys\n.\neach\n \n{\n \nkey\n \n->\n\n      \nresult\n \n<<\n \nkey\n\n    \n}\n\n  \n}\n\n  \nresult\n.\ntoSet\n()\n\n\n}\n\n\n\n\n\n\n\n\nLaunch concourse shell and invoke the function:\n\n\n\n\n[\ndefault/cash\n]\n$ showKeys\n()\n\nReturned \n'[manager, name, follows, age, friends]'\n in \n0\n.086 sec\n\n\n\n\n\nCustom Variables\n#\n\n\nInteracting with Concourse\n#",
             "title": "Shell"

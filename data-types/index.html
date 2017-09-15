@@ -10,7 +10,7 @@
         <meta name="description" content="Concourse is a self-tuning database for ACID transactions and ad-hoc analytics across time.">
       
       
-        <link rel="canonical" href="https://concoursedb.com/installation/">
+        <link rel="canonical" href="https://concoursedb.com/data-types/">
       
       
         <meta name="author" content="Cinchapi Inc.">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Installation - Concourse Guide</title>
+        <title>Data Types - Concourse Guide</title>
       
     
     
@@ -88,7 +88,7 @@
             
               
             
-            Installation
+            Data Types
           
         </span>
       </div>
@@ -221,6 +221,18 @@
       
       
 
+
+  <li class="md-nav__item">
+    <a href="../installation/" title="Installation" class="md-nav__link">
+      Installation
+    </a>
+  </li>
+
+    
+      
+      
+      
+
   
 
 
@@ -232,11 +244,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="toc">
-        Installation
+        Data Types
       </label>
     
-    <a href="./" title="Installation" class="md-nav__link md-nav__link--active">
-      Installation
+    <a href="./" title="Data Types" class="md-nav__link md-nav__link--active">
+      Data Types
     </a>
     
       
@@ -250,9 +262,105 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#binary-install" title="Binary Install" class="md-nav__link">
-    Binary Install
+  <a href="#primitive-types" title="Primitive Types" class="md-nav__link">
+    Primitive Types
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#boolean" title="Boolean" class="md-nav__link">
+    Boolean
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#double" title="Double" class="md-nav__link">
+    Double
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#float" title="Float" class="md-nav__link">
+    Float
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integer" title="Integer" class="md-nav__link">
+    Integer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#link" title="Link" class="md-nav__link">
+    Link
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#long" title="Long" class="md-nav__link">
+    Long
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#string" title="String" class="md-nav__link">
+    String
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tag" title="Tag" class="md-nav__link">
+    Tag
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timestamp" title="Timestamp" class="md-nav__link">
+    Timestamp
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-types" title="Advanced Types" class="md-nav__link">
+    Advanced Types
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-link" title="Dynamic Link" class="md-nav__link">
+    Dynamic Link
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resolvable-link" title="Resolvable Link" class="md-nav__link">
+    Resolvable Link
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -262,18 +370,6 @@
   
 </nav>
     
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../data-types/" title="Data Types" class="md-nav__link">
-      Data Types
-    </a>
   </li>
 
     
@@ -538,9 +634,105 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#binary-install" title="Binary Install" class="md-nav__link">
-    Binary Install
+  <a href="#primitive-types" title="Primitive Types" class="md-nav__link">
+    Primitive Types
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#boolean" title="Boolean" class="md-nav__link">
+    Boolean
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#double" title="Double" class="md-nav__link">
+    Double
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#float" title="Float" class="md-nav__link">
+    Float
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integer" title="Integer" class="md-nav__link">
+    Integer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#link" title="Link" class="md-nav__link">
+    Link
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#long" title="Long" class="md-nav__link">
+    Long
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#string" title="String" class="md-nav__link">
+    String
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tag" title="Tag" class="md-nav__link">
+    Tag
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timestamp" title="Timestamp" class="md-nav__link">
+    Timestamp
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-types" title="Advanced Types" class="md-nav__link">
+    Advanced Types
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-link" title="Dynamic Link" class="md-nav__link">
+    Dynamic Link
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resolvable-link" title="Resolvable Link" class="md-nav__link">
+    Resolvable Link
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -558,42 +750,37 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/cinchapi/concourse/edit/master/docs/installation.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/cinchapi/concourse/edit/master/docs/data-types.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="install-concourse">Install Concourse<a class="headerlink" href="#install-concourse" title="Permanent link">#</a></h1>
-<div class="admonition note">
-<p class="admonition-title">System Requirements</p>
+                <h1 id="data-types">Data Types<a class="headerlink" href="#data-types" title="Permanent link">#</a></h1>
+<p>Concourse is a dynamically typed database which means that value types are intelligently inferred and comparisons can be made across value types.</p>
+<p>Values in Concourse can be</p>
+<h2 id="primitive-types">Primitive Types<a class="headerlink" href="#primitive-types" title="Permanent link">#</a></h2>
+<h3 id="boolean">Boolean<a class="headerlink" href="#boolean" title="Permanent link">#</a></h3>
+<h3 id="double">Double<a class="headerlink" href="#double" title="Permanent link">#</a></h3>
+<h3 id="float">Float<a class="headerlink" href="#float" title="Permanent link">#</a></h3>
+<h3 id="integer">Integer<a class="headerlink" href="#integer" title="Permanent link">#</a></h3>
+<h3 id="link">Link<a class="headerlink" href="#link" title="Permanent link">#</a></h3>
+<p>A <code>Link</code> is a pointer to another record. Links are used model relationship graphs within Concourse.</p>
 <ul>
-<li><a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">JRE or JDK 1.8+</a></li>
-<li>At least <strong>256MB</strong> of available system memory</li>
-<li>Linux or macOS</li>
+<li>Links can be created using the <code>link(key, destination, source)</code> method.</li>
+<li>Links can be <a href="../queries">queried</a> using the <code>LINKS_TO</code> operator.</li>
 </ul>
+<h3 id="long">Long<a class="headerlink" href="#long" title="Permanent link">#</a></h3>
+<h3 id="string">String<a class="headerlink" href="#string" title="Permanent link">#</a></h3>
+<h3 id="tag">Tag<a class="headerlink" href="#tag" title="Permanent link">#</a></h3>
+<p>A <code>Tag</code> is a String that is <em>not</em> indexed for full-text search.</p>
+<h3 id="timestamp">Timestamp<a class="headerlink" href="#timestamp" title="Permanent link">#</a></h3>
+<p>A <code>Timestamp</code> is a</p>
+<h2 id="advanced-types">Advanced Types<a class="headerlink" href="#advanced-types" title="Permanent link">#</a></h2>
+<h3 id="dynamic-link">Dynamic Link<a class="headerlink" href="#dynamic-link" title="Permanent link">#</a></h3>
+<h3 id="resolvable-link">Resolvable Link<a class="headerlink" href="#resolvable-link" title="Permanent link">#</a></h3>
+<p>A <code>resolvable link</code> is an instruction to create a link to <em>all</em> the records that match a criteria. Unlike dynamic links, a resolvable link is only evaluated once, at the time of write, so the linked records won&rsquo;t automatically change as the criteria&rsquo;s results do.</p>
+<div class="admonition warning">
+<p class="admonition-title">Do not add resolvable links directly</p>
+<p>You cannot use the <code>add</code> methods to write resolvable links because the operation would not be atomic. You should only use resolvable links when writing data within a larger blob of information (e.g. a <code>Map</code> or JSON string being written using the <code>insert</code> method). In this case, you can add a resolvable link to the blob using the <code>Link.toWhere(criteria)</code> method.</p>
 </div>
-<h2 id="binary-install">Binary Install<a class="headerlink" href="#binary-install" title="Permanent link">#</a></h2>
-<ol>
-<li>
-<p><strong>Download the installer.</strong> From the terminal, navigate to the location where you want to install Concourse and download the installer for the latest version:</p>
-<div class="code"><pre><span></span>  curl -o concourse-server.bin -L http://concoursedb.com/download/latest
-</pre></div>
-
-
-</li>
-<li>
-<p><strong>Run the installer.</strong> Execute the downloaded <code>.bin</code> file. You&rsquo;ll be prompted to enter an administrator password so the installer can add the Concourse scripts and log files on your $PATH. This is <strong>recommended</strong> but not required.</p>
-<div class="code"><pre><span></span>  sh concourse-server.bin
-</pre></div>
-
-
-</li>
-<li>
-<p><strong>Start Concourse.</strong> Concourse ships with reasonable default configuration so you can use it right out-the-box! If necessary, you can configure how Concourse runs by editing the <a href="../">concourse.prefs</a> configuration file located in Concourse&rsquo;s <a href="../">home directory</a>.</p>
-<div class="code"><pre><span></span>  concourse start
-</pre></div>
-
-
-</li>
-</ol>
                 
                   
                 
@@ -612,7 +799,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../introduction/" title="Introduction" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../installation/" title="Installation" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -621,19 +808,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Introduction
+                Installation
               </span>
             </div>
           </a>
         
         
-          <a href="../data-types/" title="Data Types" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../shell/" title="Shell" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Data Types
+                Shell
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
