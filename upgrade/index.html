@@ -10,7 +10,7 @@
         <meta name="description" content="Concourse is a self-tuning database for ACID transactions and ad-hoc analytics across time.">
       
       
-        <link rel="canonical" href="https://concoursedb.com/time-travel/">
+        <link rel="canonical" href="https://concoursedb.com/upgrade/">
       
       
         <meta name="author" content="Cinchapi Inc.">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Time Travel - Concourse Guide</title>
+        <title>Upgrade - Concourse Guide</title>
       
     
     
@@ -88,7 +88,7 @@
             
               
             
-            Time Travel
+            Upgrade
           
         </span>
       </div>
@@ -233,11 +233,20 @@
       
       
 
+  
 
-  <li class="md-nav__item">
-    <a href="../upgrade/" title="Upgrade" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+    <a href="./" title="Upgrade" class="md-nav__link md-nav__link--active">
       Upgrade
     </a>
+    
   </li>
 
     
@@ -329,75 +338,11 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="toc">
-        Time Travel
-      </label>
-    
-    <a href="./" title="Time Travel" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../time-travel/" title="Time Travel" class="md-nav__link">
       Time Travel
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#historical-reads" title="Historical Reads" class="md-nav__link">
-    Historical Reads
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#historical-queries" title="Historical Queries" class="md-nav__link">
-    Historical Queries
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#historical-browse" title="Historical Browse" class="md-nav__link">
-    Historical Browse
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#audit" title="Audit" class="md-nav__link">
-    Audit
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#chronologize" title="Chronologize" class="md-nav__link">
-    Chronologize
-  </a>
-  
-</li>
-      
-      
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
     
@@ -574,48 +519,6 @@
     
   
   
-    <label class="md-nav__title" for="toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#historical-reads" title="Historical Reads" class="md-nav__link">
-    Historical Reads
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#historical-queries" title="Historical Queries" class="md-nav__link">
-    Historical Queries
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#historical-browse" title="Historical Browse" class="md-nav__link">
-    Historical Browse
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#audit" title="Audit" class="md-nav__link">
-    Audit
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#chronologize" title="Chronologize" class="md-nav__link">
-    Chronologize
-  </a>
-  
-</li>
-      
-      
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -626,15 +529,11 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/cinchapi/concourse/edit/master/docs/time-travel.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/cinchapi/concourse/edit/master/docs/upgrade.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="time-travel">Time Travel<a class="headerlink" href="#time-travel" title="Permanent link">#</a></h1>
-<h2 id="historical-reads">Historical Reads<a class="headerlink" href="#historical-reads" title="Permanent link">#</a></h2>
-<h2 id="historical-queries">Historical Queries<a class="headerlink" href="#historical-queries" title="Permanent link">#</a></h2>
-<h2 id="historical-browse">Historical Browse<a class="headerlink" href="#historical-browse" title="Permanent link">#</a></h2>
-<h2 id="audit">Audit<a class="headerlink" href="#audit" title="Permanent link">#</a></h2>
-<h2 id="chronologize">Chronologize<a class="headerlink" href="#chronologize" title="Permanent link">#</a></h2>
+                <h1 id="upgrade-concourse">Upgrade Concourse<a class="headerlink" href="#upgrade-concourse" title="Permanent link">#</a></h1>
+<p>Use the <code>concourse upgrade</code> command to check for and install a newer version.</p>
                 
                   
                 
@@ -653,7 +552,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../transactions/" title="Transactions" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../installation/" title="Installation" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -662,19 +561,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Transactions
+                Installation
               </span>
             </div>
           </a>
         
         
-          <a href="../aggregations/" title="Aggregations" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../data-types/" title="Data Types" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Aggregations
+                Data Types
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

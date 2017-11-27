@@ -2,12 +2,12 @@
     "docs": [
         {
             "location": "/",
-            "text": "The Concourse Guide\n#\n\n\nWelcome to the Concourse Guide!\n\n\nConcourse is an \nopen source\n, self-tuning database for both ACID transactions and ad hoc analytics across time. This Guide covers key concepts in Concourse, explains the \nAPI\n through examples and provides advice for operations and administration.\n\n\nFor new features in Concourse 0.5, see \nRelease Notes for Concourse 0.5\n.\n\n\nGetting Started\n#\n\n\nCommunity\n#\n\n\nGetting help\n#\n\n\nLicensing\n#\n\n\nConcourse is released under the Apache License, Version 2.0. For more information see the \nLICENSE\n and \nNOTICE\n files included in the Concourse repository.\n\n\nAdditional Resources\n#",
+            "text": "The Concourse Guide\n#\n\n\nWelcome to the Concourse Guide!\n\n\nConcourse is an \nopen source\n, distributed database warehouse for transactions, search and analytics across time. This Guide covers key concepts in Concourse, explains the \nAPI\n through examples and provides advice for operations and administration.\n\n\nFor more information about new features in the latest release please see the \nConcourse Release Notes\n.\n\n\nGetting Started\n#\n\n\nCommunity\n#\n\n\nGetting help\n#\n\n\nVisit the Cinchapi Support Center at [https://support.cinchapi.com] to view knowledge base articles or file support requests.\n\n\nLicensing\n#\n\n\nConcourse is released under the Apache License, Version 2.0. For more information see the \nLICENSE\n and \nNOTICE\n files included in the Concourse repository.\n\n\nAdditional Resources\n#",
             "title": "Home"
         },
         {
             "location": "/#the-concourse-guide",
-            "text": "Welcome to the Concourse Guide!  Concourse is an  open source , self-tuning database for both ACID transactions and ad hoc analytics across time. This Guide covers key concepts in Concourse, explains the  API  through examples and provides advice for operations and administration.  For new features in Concourse 0.5, see  Release Notes for Concourse 0.5 .",
+            "text": "Welcome to the Concourse Guide!  Concourse is an  open source , distributed database warehouse for transactions, search and analytics across time. This Guide covers key concepts in Concourse, explains the  API  through examples and provides advice for operations and administration.  For more information about new features in the latest release please see the  Concourse Release Notes .",
             "title": "The Concourse Guide"
         },
         {
@@ -22,7 +22,7 @@
         },
         {
             "location": "/#getting-help",
-            "text": "",
+            "text": "Visit the Cinchapi Support Center at [https://support.cinchapi.com] to view knowledge base articles or file support requests.",
             "title": "Getting help"
         },
         {
@@ -89,6 +89,16 @@
             "location": "/installation/#binary-install",
             "text": "Download the installer.  From the terminal, navigate to the location where you want to install Concourse and download the installer for the latest version:    curl -o concourse-server.bin -L http://concoursedb.com/download/latest    Run the installer.  Execute the downloaded  .bin  file. You\u2019ll be prompted to enter an administrator password so the installer can add the Concourse scripts and log files on your $PATH. This is  recommended  but not required.    sh concourse-server.bin    Start Concourse.  Concourse ships with reasonable default configuration so you can use it right out-the-box! If necessary, you can configure how Concourse runs by editing the  concourse.prefs  configuration file located in Concourse\u2019s  home directory .    concourse start",
             "title": "Binary Install"
+        },
+        {
+            "location": "/upgrade/",
+            "text": "Upgrade Concourse\n#\n\n\nUse the \nconcourse upgrade\n command to check for and install a newer version.",
+            "title": "Upgrade"
+        },
+        {
+            "location": "/upgrade/#upgrade-concourse",
+            "text": "Use the  concourse upgrade  command to check for and install a newer version.",
+            "title": "Upgrade Concourse"
         },
         {
             "location": "/data-types/",
